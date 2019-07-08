@@ -19,6 +19,7 @@ class Scraper
 
   def self.scrape_profile_page(profile_url)
     doc = Nokogiri::HTML(open(profile_url))
+<<<<<<< HEAD
     student = {}
     doc.css("div.social-icon-container a").each_with_index do |a, i|
       case a.css("img.social-icon").attribute("src").value
@@ -31,6 +32,16 @@ class Scraper
       when "../assets/img/rss-icon.png"
         student[:blog] = a.attribute("href").value
       end
+=======
+
+    student = {}
+  #  urls = []
+    doc.css(".social-icon-container a").each do |a|
+      student[:twitter] = a.attribute("href").value if a.css("img.social-icon").attribute("src").value.match(/\w*twitter\w*/)
+      student[:linkedin] = a.attribute("href").value if a.css("img.social-icon").attribute("src").value.match(/\w*linkedin\w*/)
+      student[:github] = a.attribute("href").value if a.css("img.social-icon").attribute("src").value.match(/\w*github\w*/)
+      student[:blog] = a.attribute("href").value if a.css("img.social-icon").attribute("src").value.match(/\w*blog\w*/)
+>>>>>>> f5925ab224f0b5d20b4aebc8c0224a6b081cbb43
       student[:profile_quote] = doc.css(".vitals-text-container div.profile-quote").text
       student[:bio] = doc.css(".details-container div.bio-block div.bio-content div.description-holder p").text
     end
